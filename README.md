@@ -1,6 +1,7 @@
-Viettel Digital Talent Program - Cloud
+# Viettel Digital Talent Program - Cloud
 
-Week 1: Topics
+## Week 1: Topics
+
 - Cloud
 - Virtualization
 - Docker
