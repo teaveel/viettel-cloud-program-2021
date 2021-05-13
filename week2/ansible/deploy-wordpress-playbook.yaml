@@ -1,4 +1,3 @@
----
 - name: deploy wordpress
   hosts: wp
 
@@ -9,9 +8,6 @@
       service:
         name: docker
         state: started
-    # - name: Create a network
-    #   become: yes
-    #   command: docker network create wordpress-network
     - name: Create a volume for wordpress
       become: yes
       command: docker volume create --name wordpress_data

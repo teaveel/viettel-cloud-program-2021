@@ -1,7 +1,5 @@
----
 - name: deploy mariadb
   hosts: db
-
   gather_facts: false
   tasks:
     - name: Ensure docker service is running

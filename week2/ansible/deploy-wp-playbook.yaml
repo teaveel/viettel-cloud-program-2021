@@ -1,6 +1,6 @@
 ---
 - name: deploy wordpress
-  hosts: vm
+  hosts: wp
 
   gather_facts: false
   tasks:
