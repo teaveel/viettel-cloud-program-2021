@@ -31,11 +31,11 @@ $ sudo service ssh status
 
 ### IP Address
 
->Controller Machine: 192.168.88.135
+>Controller Machine: ```192.168.88.135```
 
->Managed Machine 1: 192.168.88.136
+>Managed Machine 1: ```192.168.88.136```
 
->Managed Machine 2: 192.168.88.137
+>Managed Machine 2: ```192.168.88.137```
 
 ## Practice 1: Using Ansible to set up docker and deploy WordPress
 
@@ -155,7 +155,6 @@ $ ansible-playbook -i inventory.ini deploy-wp-playbook.yaml
 
 ## Practice 2: Using Ansible to set up docker on VMs and deploy Wordpress on VM1, MariaDB on VM2
 
-> Note: I don't mention
 
 
 ### Step 1: Still create and configure important files
