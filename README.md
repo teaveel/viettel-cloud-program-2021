@@ -6,3 +6,9 @@
 - Virtualization
 - Docker
 - Container
+
+## Week 2: Topics
+
+- Automation
+- Ansible introduction
+- Diving into Ansible
