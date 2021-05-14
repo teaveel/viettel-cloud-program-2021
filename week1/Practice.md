@@ -116,21 +116,26 @@ $ docker-compose up -d
 
 ## Practice 3: Deploy WordPress with Command Line on two virtual machines 
 
-**keyword : Multi-container apps**
+### Step 1: Set up openssh-server
 
- Containers run in isolation and don’t know anything about other processes or containers on the same machine. How to talk to another? 
-
- Answer: Use **networking**
-
-
-### Start MariaDB
-
-#### Step 1: Create the network
+Allow connect to machine via ssh port 22
 
 ```shell
-$ docker network create wordpress-network
+$ sudo apt install openssh-server
 ```
-#### Step 2: Create a volume for MariaDB persistence and create a MariaDB container
+
+Check SSH service
+
+```shell
+$ sudo service ssh status
+```
+
+### Step 2: Start MariaDB
+
+
+#### Create a volume for MariaDB persistence and create a MariaDB container
+
+>*Note: Use host network*
 
 ```shell
 $ docker volume create --name mariadb_data
@@ -139,40 +144,22 @@ $ docker run -d --name mariadb \
   --env MARIADB_USER=bn_wordpress \
   --env MARIADB_PASSWORD=bitnami \
   --env MARIADB_DATABASE=bitnami_wordpress \
-  --network wordpress-network \
+  --network host \
   --volume mariadb_data:/bitnami/mariadb \
   bitnami/mariadb:latest
 ```
 
-#### Step 3: Confirm we have the database up and running, connect to the database and verify it connects.
-
-```shell
-$ docker exec -it 3998c2aa0839 mariadb -u root -p
-
-// 3998c2aa0839 -> <mariadb-container-id>
-```
-
-Just enter, and:
-
-![database connect](./img/img8.png)
-
-### Start Deploy WordPress (in another VM)
+### Step 3: Start Deploy WordPress (in another VM)
 
 After set up all like previous Practices
 
-#### Step 1: Create WordPress volume for persistence Run WordPress container (same network with MariaDB container)
+
+####  Create WordPress volume for persistence Run WordPress container (same network with MariaDB container)
 
 ```shell
 $ docker volume create --name wordpress_data
-$ docker run -d --name wordpress \
-  -p 8080:8080 -p 8443:8443 \
-  --env ALLOW_EMPTY_PASSWORD=yes \
-  --env WORDPRESS_DATABASE_USER=bn_wordpress \
-  --env WORDPRESS_DATABASE_PASSWORD=bitnami \
-  --env WORDPRESS_DATABASE_NAME=bitnami_wordpress \
-  --network wordpress-network \
-  --volume wordpress_data:/bitnami/wordpress \
-  bitnami/wordpress:latest
+$ docker run -d --name wordpress -p 8080:8080 -p 8443:8443 --env ALLOW_EMPTY_PASSWORD=yes --env WORDPRESS_DATABASE_USER=bn_wordpress --env WORDPRESS_DATABASE_PASSWORD=bitnami --env WORDPRESS_DATABASE_NAME=bitnami_wordpress --network host --add-host mariadb:192.168.88.137 --volume wordpress_data:/bitnami/wordpress bitnami/wordpress:latest
 ```
 
-...
+
+![](./img/img9.png)
