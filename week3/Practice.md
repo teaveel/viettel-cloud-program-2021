@@ -51,7 +51,7 @@ $ sudo ifconfig br1 10.1.1.117/24
 $ sudo ovs-vsctl add-port br1 vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=192.168.1.207
 ```
 
-Check bridges
+**Check bridges**
 
 ```shell
 $ sudo ovs-vsctl show
@@ -79,7 +79,7 @@ $ sudo ifconfig br1 10.1.1.118/24
 $ sudo ovs-vsctl add-port br1 vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=192.168.1.206
 ```
 
-Check bridges
+**Check bridges**
 
 ```shell
 $ sudo ovs-vsctl show
