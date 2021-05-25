@@ -2,6 +2,11 @@
 
 ## Set up
 
+### Environment:
+- 2 VMs: Ubuntu 20.04
+- Network: 192.168.1.114
+- Software: Openvswitch
+
 #### First, update and upgrade apt
 
 ```shell
@@ -29,7 +34,24 @@ $ sudo gpasswd -a $USER wireshark
 $ sudo chmod +x /usr/bin/dumpcap
 ```
 
-## 
+## Topo
+```
++----------------+                                     +----------------+
+|      br1       |                                     |      br1       |
+|  10.1.1.117/24 |                                     |  10.1.1.118/24 |
++----------------+                                     +----------------+
+|     vxlan1     |                                     |     vxlan1     |
++----------------+                                     +----------------+
+        |                                                      |
+        |                                                      |
+        |                                                      |
++-----------------+                                   +------------------+
+|       br0       |                                   |        br0       |
+|  192.168.1.206  |                                   |  192.168.1.207   |
++-----------------+                                   +------------------+
+        |                                                  |
+        ----------------------------------------------------
+```
 
  
 ## Configure br0 and br1 on VM1
@@ -101,3 +123,19 @@ $ ping -I br1 10.1.1.118
 ![](image/img8.png)
 
 ![](image/img7.png)
+
+## Advantages and Disadvantages of using VXLANs
+
+### Advantages
+
+- Expands the number of virtual networks that can be allocated: 2^24^ compared to vlan's 2^12^
+- Vxlan works on L3 so it can take advantage of L3 network: avoid loop, use ECMP to increase efficiency compared to STP in L2
+- Transparency: provide transparent virtual network with underlay network infrastructure
+- Isolation: separates virtual networks from each other, reducing BUM traffic 
+
+### Disvantages
+
+- Packets are packed with more layers, the size increases causing network performance reduction: consuming more processing resources, reducing transmission bandwidth
+- More complicated configuration than VLAN
+- Troubleshoot is more difficult due to transparency
+- Difficult to integrate with traditional network devices that do not support VXLAN 
