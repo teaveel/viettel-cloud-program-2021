@@ -95,7 +95,9 @@ $ echo -n 'matkhau' | base64
 
 ![](./image/pass.png)
 
-**Now, create and configure file ```secrets.yaml```, copy and paste password in the last line.**
+**Now, create and configure file [```secrets.yaml```](./deploy-wordpress/secrets.yaml), copy and paste password in the last line.**
+
+- [```secrets.yaml```](./deploy-wordpress/secrets.yaml)
 
 ```yaml
 apiVersion: v1
@@ -116,7 +118,7 @@ $ kubectl apply -f secrets.yaml
 
 **Open minikube dashboard to view the newly created secret**
 
-**Configure file ```mysql-deployment.yaml``` and deploy mysql**
+**Configure file [```mysql-deployment.yaml```](./deploy-wordpress/mysql-deployment.yaml) and deploy mysql**
 - [```mysql-deployment.yaml```](./deploy-wordpress/mysql-deployment.yaml):
 
 ```yaml
@@ -206,7 +208,7 @@ $ kubectl apply -f mysql-deployment.yaml
 ![](./image/mysqldep3.png)
 
 
-**Configure file ```wordpress-deployment.yaml``` and deploy wordpress**
+**Configure file [```wordpress-deployment.yaml```](./deploy-wordpress/wordpress-deployment.yaml) and deploy wordpress**
 - [```wordpress-deployment.yaml```](./deploy-wordpress/wordpress-deployment.yaml):
 
 ```yaml
