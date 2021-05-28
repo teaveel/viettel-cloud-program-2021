@@ -104,7 +104,7 @@ metadata:
   name: mysql-pass
 type: Opaque
 data:
-  password: 
+  password: bWF0a2hhdQ==
 ```
 
 **And run command**
