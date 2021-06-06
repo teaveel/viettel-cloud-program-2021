@@ -4,6 +4,8 @@
 
 ### Environment:
 - 2 VMs: Ubuntu 20.04
+  - IP VM1: 196.168.1.212
+  - IP VM1: 196.168.1.214
 - Network: 192.168.1.114
 - Software: Openvswitch
 
@@ -47,7 +49,7 @@ $ sudo chmod +x /usr/bin/dumpcap
         |                                                      |
 +-----------------+                                   +------------------+
 |       br0       |                                   |        br0       |
-|  192.168.1.206  |                                   |  192.168.1.207   |
+|  192.168.1.212  |                                   |  192.168.1.214   |
 +-----------------+                                   +------------------+
         |                                                  |
         ----------------------------------------------------
@@ -64,13 +66,14 @@ $ sudo chmod +x /usr/bin/dumpcap
 # configure br0
 $ sudo ovs-vsctl add-br br0
 $ sudo ifconfig br0 up
-$ sudo ifconfig add-port br0 ens33
+$ sudo ovs-vsctl add-port br0 ens33
 $ sudo ifconfig ens33 0
 $ sudo dhclient br0
 
 # configure br1
+$ sudo ovs-vsctl add-br br1
 $ sudo ifconfig br1 10.1.1.117/24
-$ sudo ovs-vsctl add-port br1 vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=192.168.1.207
+$ sudo ovs-vsctl add-port br1 vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=192.168.1.214
 ```
 
 **Check bridges**
@@ -79,7 +82,7 @@ $ sudo ovs-vsctl add-port br1 vxlan1 -- set interface vxlan1 type=vxlan options:
 $ sudo ovs-vsctl show
 ```
 
-![](image/img4.png)
+![](image/img1.png)
 
 
 ## Configure br0 and br1 on VM2
@@ -92,13 +95,14 @@ $ sudo ovs-vsctl show
 # configure br0
 $ sudo ovs-vsctl add-br br0
 $ sudo ifconfig br0 up
-$ sudo ifconfig add-port br0 ens33
+$ sudo ovs-vsctl add-port br0 ens33
 $ sudo ifconfig ens33 0
 $ sudo dhclient br0
 
 # configure br1
+$ sudo ovs-vsctl add-br br1
 $ sudo ifconfig br1 10.1.1.118/24
-$ sudo ovs-vsctl add-port br1 vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=192.168.1.206
+$ sudo ovs-vsctl add-port br1 vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=192.168.1.212
 ```
 
 **Check bridges**
@@ -107,7 +111,7 @@ $ sudo ovs-vsctl add-port br1 vxlan1 -- set interface vxlan1 type=vxlan options:
 $ sudo ovs-vsctl show
 ```
 
-![](image/img5.png)
+![](image/img2.png)
 
 ## Test Ping
 
@@ -115,14 +119,15 @@ Ping from VM1 to VM2
 ```shell
 $ ping -I br1 10.1.1.118
 ```
-![](image/img6.png)
+![](image/img3.png)
 
 
 ## Use Wireshark to capture
 
-![](image/img8.png)
+**Open Wireshark on VM2 while ping from VM1 to VM2**
 
-![](image/img7.png)
+![](image/img4.png)
+
 
 ## Advantages and Disadvantages of using VXLANs
 
